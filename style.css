@@ -1,55 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
+h2 {
+    font-size: 24px;
+    color: #2C3E50;
+    margin-bottom: 10px;
+}
 
-    
-        h2 {
-            font-size: 24px;
-            color: #2C3E50;
-            margin-bottom: 10px;
-        }
+#dados, #formacao, #fazer {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-    
-        #dados, #formacao {
-            background-color: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
 
-     
-        ul {
-            list-style-type: none;
-        }
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
 
-        li {
-            font-size: 16px;
-            margin-bottom: 8px;
-            color: #34495E;
-        }
+th {
+    background-color: #ffb4ec;
+    color: white;
+    font-weight: bold;
+}
 
-        li:before {
-            content: "•";
-            color: #2980B9;
-            margin-right: 8px;
-        }
+td {
+    background-color: #f9f9f9;
+}
 
+ul {
+    list-style-type: none;
+}
 
-        footer {
-            text-align: center;
-            font-size: 14px;
-            background-color: #ffb4ec;
-            margin-top: 40px;
-        }
+li {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #34495E;
+}
+
+li:before {
+    content: "•";
+    color: #2980B9;
+    margin-right: 8px;
+}
+
+footer {
+    text-align: center;
+    font-size: 14px;
+    background-color: #ffb4ec;
+    padding: 10px;
+    margin-top: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#foto1 {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+/* Estiliza a imagem */
+#foto1 img {
+    border: 5px solid #3498db; 
+    border-radius: 10px; 
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
