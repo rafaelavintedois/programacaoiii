@@ -3,70 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curriculo</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Cadastro de Veículos</title>
+    <link rel="stylesheet" href="style2.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 
-    <div id="foto1">
+    <div id="tudo">
 
-        <img id="foto1" src="imagens/foto1.jpg" alt="FOTO1" height="200" width="200">
-
-
-    </div>
-
-    <div id="dados">
-        <h2>Dados Pessoais</h2>
-        <table border="1">
-            <tr>
-                <th>Informação</th>
-                <th>Detalhes</th>
-            </tr>
-            <tr>
-                <td>Nome</td>
-                <td>Rafaela Marcon</td>
-            </tr>
-            <tr>
-                <td>Data de Nascimento</td>
-                <td>9 de maio de 2008</td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td>rafahmarcon@gmail.com</td>
-            </tr>
-            <tr>
-                <td>Cidade</td>
-                <td>Tapejara, Rio Grande do Sul</td>
-            </tr>
-            <tr>
-                <td>Faculdade dos Sonhos</td>
-                <td>Engenharia Aeronáutica</td>
-            </tr>
-        </table>
-    </div>
-
-
-    <div id="formacao">
-    <h2>Formação Acadêmica</h2>
-    <ul>
-        <li>Curso de Inglês Cambridge nível C1</li>
-    </ul>
-    </div>
-
-    <div id="fazer">
-        <h2>O que eu gosto de fazer</h2>
-        <ul>
-            <li>Ler</li>
-            <li>Jogar Volêi</li>
-            <li>Ir para a Praia</li>
-            <li>Sair com os meus Amigos</li>
-        </ul>
+        <div id="titulopagina">
+            <h1>Cadastro De Veículos</h1>
         </div>
-    
 
+        <div id="caixas">
+
+            <label>CÓDIGO:</label>
+            <input type="number" id="codigo" name="codigo">
+
+            <br>
+
+            <label>MODELO:</label>
+            <input type="text" id="modelo" name="modelo">
+
+            <br>
+
+            <label>FABRICANTE:</label>
+            <select name="fabri" id="fabri">
+                <option value="selecionar">SELECIONE</option>
+                <option value="aston">Aston Martin</option>
+                <option value="ferrari">Ferrari</option>
+                <option value="mercedes">Mercedes</option>
+            </select>
+
+        </div>
+
+        <div id="caixinha1">
+            <div id="caixas">
+
+                <label>SITUAÇÃO:</label>
+                <input type="checkbox" id="situacao" name="situacao">
+
+                <br><br>
+
+                <label>VALOR:</label>
+                <input type="number" id="valor" name="valor">
+
+                <br><br>
+
+                <label>DATA:</label>
+                <input type="date" id="data" name="data">
+
+            </div>
+        </div>
+
+        <div id="caixinha2">
+            <div id="caixas">
+
+                <label>OBSERVAÇÕES:</label>
+                <input type="text" id="texto" name="texto">
+
+            </div>
+        </div>
+        
+        <br><br>
+
+        <div id="botao">
+
+            <button id="cadastrar" name="cadastrar">CADASTRAR</button>
+            <button id="limpar" name="limpar">LIMPAR</button>
+            
+        </div>
+
+        <br>
+
+        <table border="1" id="tabelaVeiculos">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Modelo</th>
+                    <th>Fabricante</th>
+                    <th>Situação</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                    <th>Observações</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+
+<script type="text/javascript">
+    $("#cadastrar").click(function() {
+        var codigo = $("#codigo").val();
+        if (codigo <= 0 || codigo > 1000) {
+            alert("Código Inválido");
+            return false;
+        }
+
+        var modelo = $("#modelo").val();
+        if (modelo === "") {
+            alert("O campo modelo deve ser preenchido.");
+            return false;
+        } else if (modelo.length > 1000) {
+            alert("O campo modelo não pode ter mais de 1000 caracteres.");
+            return false;
+        }
+
+        var valor = $("#valor").val();
+        if (valor <= 999 || valor > 10000) {
+            alert("Valor Inválido");
+            return false;
+        }
+
+        var dataInserida = $("#data").val();
+        var dataAtual = new Date().toISOString().split('T')[0];
+
+        if (dataInserida > dataAtual) {
+            alert("A data inserida não é a data atual.");
+            return false;
+        }
+
+        var fabricante = $("#fabri option:selected").text();
+        var situacao = $("#situacao").is(":checked") ? "Ativo" : "Inativo";
+        var observacoes = $("#texto").val();
+
+        var novaLinha = `
+            <tr>
+                <td>${codigo}</td>
+                <td>${modelo}</td>
+                <td>${fabricante}</td>
+                <td>${situacao}</td>
+                <td>${valor}</td>
+                <td>${dataInserida}</td>
+                <td>${observacoes}</td>
+            </tr>
+        `;
+
+        $("#tabelaVeiculos tbody").append(novaLinha);
+
+        limparCampos();
+
+        return true;
+    });
+
+    $("#limpar").click(function() {
+        limparCampos();
+        alert("Campos limpos!");
+    });
+
+    function limparCampos() {
+        $("#codigo").val('');
+        $("#modelo").val('');
+        $("#fabri").val('selecionar');
+        $("#situacao").prop('checked', false);
+        $("#valor").val('');
+        $("#data").val('');
+        $("#texto").val('');
+    }
+</script>
 
 </body>
-<footer>
-<p> Rafaela Marcon Capra, 2025.</p>
-</footer>
 </html>

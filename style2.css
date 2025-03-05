@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    justify-content: center;  
+    align-items: center; 
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#titulopagina {
+    text-align: center;
+}
+
+#caixas{
+    text-align: center;
+    background-color: #ffb4ec;
+    padding: 10px;
+    margin-top: 40px;
+    border-radius: 8px;
+    width: 300px;
+}
+
+#caixinha1{
+    float: left;
+}
+
+#caixinha2{
+    float: right;
+    margin-left: 13px; 
+}
+
+#botao{
+     clear: both;
+     text-align: center;
+     padding: 10px;
+
+}
