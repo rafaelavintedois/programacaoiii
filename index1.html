@@ -18,6 +18,12 @@
                         <li><label>{{jogadores[jogadores.length - 1].senha}}</label></li>
                     </ul>  
                     
+                    <div>
+                        <h3>Adicionar Nova Patente</h3>
+                        <input v-model="novaPatenteDescricao" type="text" placeholder="Descrição da patente">
+                        <button type="submit">Adicionar Patente</button>
+                    </div>
+
                     <h2>Listagem de Patentes</h2>
                     <ul id="example-0">
                         <li v-for="p in patentes" :key="p.descricao">
@@ -109,12 +115,23 @@
                 el: '#app', 
                 data: dados,
                 methods: { 
+                    // Método para adicionar uma nova patente
+                    adicionarPatente: function(event) {
+                        // Evitar envio do formulário (para recarregar a página)
+                        event.preventDefault();
 
+                        if(this.novaPatenteDescricao.trim() !== '') {
+                            var novoCodigo = this.patentes.length + 1;
+                            this.patentes.push({ codigo: novoCodigo.toString(), descricao: this.novaPatenteDescricao });
+                            this.novaPatenteDescricao = ''; // Limpa o campo após adicionar
+                        } else {
+                            alert('Por favor, insira uma descrição para a patente!');
+                        }
+                    }
                 }
             }); 
-    
         });
-
+    
     </script> 
    
  </html>
