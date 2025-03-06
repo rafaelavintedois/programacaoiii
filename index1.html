@@ -13,15 +13,23 @@
                 <form id="formulario1">
                     <h2>Listagem de Jogadores</h2>
                     <ul>
-                        <li><label>{{jogadores[0].nickname}}</label></li>
-                        <li><label>{{jogadores[1].qtd_estrela}}</label></li>
-                        <li><label>{{jogadores[2].senha}}</label></li>
+                        <li><label>{{jogadores[jogadores.length - 1].nickname}}</label></li>
+                        <li><label>{{jogadores[jogadores.length - 1].qtd_estrela}}</label></li>
+                        <li><label>{{jogadores[jogadores.length - 1].senha}}</label></li>
                     </ul>  
                     
+                    <h2>Listagem de Patentes</h2>
+                    <ul id="example-0">
+                        <li v-for="p in patentes" :key="p.descricao">
+                            {{ p.descricao }}
+                        </li>
+                    </ul>
+                    ``
                     
+
                     <ul id="example-1">
                         <li v-for="j in jogadores" :key="j.nickname">
-                          {{ j.nickname }} {{ j.senha }} {{ j.qtd_estrela }}
+                          {{j.nickname}} {{ j.senha }} {{ j.qtd_estrela }}
                         </li>
                     </ul>
 
@@ -29,14 +37,16 @@
 
                     <ul id="example-2">
                         <li v-for="j in jogadores" :key="j.nickname">
-
                             <p v-if="j.qtd_estrela > 10">
                                 {{ j.nickname }} {{ j.senha }} {{ j.qtd_estrela }}
                             </p>
-                            <p v-else>jogador não tem 10 estrelas ...</p>
-
+                            
+                            <p v-else>
+                                {{ j.nickname }} não tem 10 estrelas. Ele tem {{ j.qtd_estrela }} estrelas.
+                            </p>
                         </li>
                     </ul>
+                    
 
                     <h2>Listagem de Partidas</h2>                       
 
@@ -45,6 +55,7 @@
                                 <td>Data</td>
                                 <td>Jogador</td>
                                 <td>Quantidade de Estrelas</td>
+                                <td>Patente</td>
                             </tr>
                             <tr v-for="p in partidas" :key="p.codigo">
 
@@ -52,6 +63,7 @@
                                <td> {{p.data}}</td>
                                <td> {{p.jogador.nickname}}</td>
                                <td> {{p.jogador.qtd_estrela}}</td>
+                               <td> {{p.jogador.patente}}</td>
                             </tr>
 
                         </table>
@@ -67,11 +79,11 @@
             alert('Chegou aqui !! ');
         
             var dados = { 
-                jogadores:  [ {nickname: 'joaozinho', qtd_estrela: 5, senha: '123'},    
-                              {nickname: 'ze', qtd_estrela: 12, senha: '456'},
+                jogadores:  [ {nickname: 'joaozinho', qtd_estrela: 5, senha: '123', patente: 'ouro'},    
+                              {nickname: 'ze', qtd_estrela: 12, senha: '456', patente: 'prata'},
                               {nickname: 'bastião', qtd_estrela: 16, senha: '777'},
                               {nickname: 'dede', qtd_estrela: 16, senha: '777'},
-                              {nickname: 'rafa', qtd_estrela: 67, senha: '123'}
+                              {nickname: 'rafa', qtd_estrela: 67, senha: '123', patente: 'diamante'}
                             ], 
                 patentes:   [ { codigo: '1', descricao: 'Ouro'},    
                               { codigo: '2', descricao: 'Prata'},
@@ -81,15 +93,15 @@
                 partidas:   [{codigo: 1, data: '28/02/2023', 
                                            jogador: {nickname: 'joaozinho', 
                                                      qtd_estrela: 5, 
-                                                     senha: '123'}},
+                                                     senha: '123', patente: 'ouro'}},
                              {codigo: 2, data: '10/02/2023', 
                                            jogador: {nickname: 'bastião', 
                                                      qtd_estrela: 0, 
-                                                     senha: '456'}},
+                                                     senha: '456', patente: 'prata'}},
                              {codigo: 3, data: '16/02/2025', 
                                            jogador: {nickname: 'rafa', 
                                                      qtd_estrela: 67, 
-                                                     senha: '123'}}                      
+                                                     senha: '123', patente: 'diamante'}}                      
                             ]                         
             };
         
