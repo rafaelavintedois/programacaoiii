@@ -3,135 +3,89 @@
     <head>
         <meta charset="utf-8">
         <title>FrameWork Vue</title>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>    
     </head> 
     <body>
-         <h2>Primeiro Exemplo com Vue</h2>
+        <h2>Primeiro Exemplo com Vue</h2>
          
-            <div id="app">
-                <form id="formulario1">
-                    <h2>Listagem de Jogadores</h2>
-                    <ul>
-                        <li><label>{{jogadores[jogadores.length - 1].nickname}}</label></li>
-                        <li><label>{{jogadores[jogadores.length - 1].qtd_estrela}}</label></li>
-                        <li><label>{{jogadores[jogadores.length - 1].senha}}</label></li>
-                    </ul>  
-                    
-                    <div>
-                        <h3>Adicionar Nova Patente</h3>
-                        <input v-model="novaPatenteDescricao" type="text" placeholder="Descrição da patente">
-                        <button type="submit">Adicionar Patente</button>
-                    </div>
+        <div id="app">
+            <form id="formulario1" @submit.prevent="adicionarPatente">
+                <h2>Listagem de Jogadores</h2>
+                <ul>
+                    <li><label>{{ jogadores[jogadores.length - 1].nickname }}</label></li>
+                    <li><label>{{ jogadores[jogadores.length - 1].qtd_estrela }}</label></li>
+                    <li><label>{{ jogadores[jogadores.length - 1].senha }}</label></li>
+                </ul>  
+                
+                <div>
+                    <h3>Adicionar Nova Patente</h3>
+                    <input v-model="novaPatenteDescricao" type="text" placeholder="Descrição da patente">
+                    <button type="submit">Adicionar Patente</button>
+                </div>
 
-                    <h2>Listagem de Patentes</h2>
-                    <ul id="example-0">
-                        <li v-for="p in patentes" :key="p.descricao">
-                            {{ p.descricao }}
-                        </li>
-                    </ul>
-                    ``
-                    
+                <h2>Listagem de Patentes</h2>
+                <ul>
+                    <li v-for="p in patentes" :key="p.codigo">
+                        {{ p.descricao }}
+                    </li>
+                </ul>
 
-                    <ul id="example-1">
-                        <li v-for="j in jogadores" :key="j.nickname">
-                          {{j.nickname}} {{ j.senha }} {{ j.qtd_estrela }}
-                        </li>
-                    </ul>
+                <h2>Listagem de Partidas</h2>                       
+                <table border="1">
+                    <tr>
+                        <td>Código</td>
+                        <td>Data</td>
+                        <td>Jogador</td>
+                        <td>Quantidade de Estrelas</td>
+                        <td>Patente</td>
+                    </tr>
+                    <tr v-for="p in partidas" :key="p.codigo">
+                        <td>{{ p.codigo }}</td>
+                        <td>{{ p.data }}</td>
+                        <td>{{ p.jogador.nickname }}</td>
+                        <td>{{ p.jogador.qtd_estrela }}</td>
+                        <td>{{ p.jogador.patente }}</td>
+                    </tr>
+                </table>
+            </form>                
+        </div>       
 
-
-
-                    <ul id="example-2">
-                        <li v-for="j in jogadores" :key="j.nickname">
-                            <p v-if="j.qtd_estrela > 10">
-                                {{ j.nickname }} {{ j.senha }} {{ j.qtd_estrela }}
-                            </p>
-                            
-                            <p v-else>
-                                {{ j.nickname }} não tem 10 estrelas. Ele tem {{ j.qtd_estrela }} estrelas.
-                            </p>
-                        </li>
-                    </ul>
-                    
-
-                    <h2>Listagem de Partidas</h2>                       
-
-                        <table border="1">
-                            <tr><td>Codigo</td>
-                                <td>Data</td>
-                                <td>Jogador</td>
-                                <td>Quantidade de Estrelas</td>
-                                <td>Patente</td>
-                            </tr>
-                            <tr v-for="p in partidas" :key="p.codigo">
-
-                               <td> {{p.codigo}} </td>
-                               <td> {{p.data}}</td>
-                               <td> {{p.jogador.nickname}}</td>
-                               <td> {{p.jogador.qtd_estrela}}</td>
-                               <td> {{p.jogador.patente}}</td>
-                            </tr>
-
-                        </table>
-
-                </form>                
-            </div>       
-    </body>
-
-    <script type="text/javascript">
-   
-        $(document).ready(function() {
-
-            alert('Chegou aqui !! ');
-        
-            var dados = { 
-                jogadores:  [ {nickname: 'joaozinho', qtd_estrela: 5, senha: '123', patente: 'ouro'},    
-                              {nickname: 'ze', qtd_estrela: 12, senha: '456', patente: 'prata'},
-                              {nickname: 'bastião', qtd_estrela: 16, senha: '777'},
-                              {nickname: 'dede', qtd_estrela: 16, senha: '777'},
-                              {nickname: 'rafa', qtd_estrela: 67, senha: '123', patente: 'diamante'}
-                            ], 
-                patentes:   [ { codigo: '1', descricao: 'Ouro'},    
-                              { codigo: '2', descricao: 'Prata'},
-                              { codigo: '3', descricao: 'Bronze'},
-                              { codigo: '4', descricao: 'Diamante'}
-                            ],
-                partidas:   [{codigo: 1, data: '28/02/2023', 
-                                           jogador: {nickname: 'joaozinho', 
-                                                     qtd_estrela: 5, 
-                                                     senha: '123', patente: 'ouro'}},
-                             {codigo: 2, data: '10/02/2023', 
-                                           jogador: {nickname: 'bastião', 
-                                                     qtd_estrela: 0, 
-                                                     senha: '456', patente: 'prata'}},
-                             {codigo: 3, data: '16/02/2025', 
-                                           jogador: {nickname: 'rafa', 
-                                                     qtd_estrela: 67, 
-                                                     senha: '123', patente: 'diamante'}}                      
-                            ]                         
-            };
-        
+        <script type="text/javascript">
             new Vue({ 
                 el: '#app', 
-                data: dados,
+                data: { 
+                    jogadores: [
+                        { nickname: 'joaozinho', qtd_estrela: 5, senha: '123', patente: 'ouro' },    
+                        { nickname: 'ze', qtd_estrela: 12, senha: '456', patente: 'prata' },
+                        { nickname: 'bastião', qtd_estrela: 16, senha: '777' },
+                        { nickname: 'dede', qtd_estrela: 16, senha: '777' },
+                        { nickname: 'rafa', qtd_estrela: 67, senha: '123', patente: 'diamante' }
+                    ], 
+                    patentes: [
+                        { codigo: '1', descricao: 'Ouro' },    
+                        { codigo: '2', descricao: 'Prata' },
+                        { codigo: '3', descricao: 'Bronze' },
+                        { codigo: '4', descricao: 'Diamante' }
+                    ],
+                    partidas: [
+                        { codigo: 1, data: '28/02/2023', jogador: { nickname: 'joaozinho', qtd_estrela: 5, senha: '123', patente: 'ouro' } },
+                        { codigo: 2, data: '10/02/2023', jogador: { nickname: 'bastião', qtd_estrela: 0, senha: '456', patente: 'prata' } },
+                        { codigo: 3, data: '16/02/2025', jogador: { nickname: 'rafa', qtd_estrela: 67, senha: '123', patente: 'diamante' } }                      
+                    ],
+                    novaPatenteDescricao: ''
+                },
                 methods: { 
-                    // Método para adicionar uma nova patente
-                    adicionarPatente: function(event) {
-                        // Evitar envio do formulário (para recarregar a página)
-                        event.preventDefault();
-
-                        if(this.novaPatenteDescricao.trim() !== '') {
-                            var novoCodigo = this.patentes.length + 1;
-                            this.patentes.push({ codigo: novoCodigo.toString(), descricao: this.novaPatenteDescricao });
-                            this.novaPatenteDescricao = ''; // Limpa o campo após adicionar
+                    adicionarPatente() {
+                        if (this.novaPatenteDescricao.trim() !== '') {
+                            var novoCodigo = (this.patentes.length + 1).toString();
+                            this.patentes.push({ codigo: novoCodigo, descricao: this.novaPatenteDescricao });
+                            this.novaPatenteDescricao = '';
                         } else {
                             alert('Por favor, insira uma descrição para a patente!');
                         }
                     }
                 }
-            }); 
-        });
-    
-    </script> 
-   
- </html>
+            });
+        </script> 
+    </body>
+</html>
