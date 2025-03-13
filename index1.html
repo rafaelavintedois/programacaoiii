@@ -146,7 +146,7 @@
                         let datae = new Date(input_data);
                         if (currentDate > datae) {
                             if (this.novo_jogador.indice !== undefined) {
-                                // Editing an existing player
+
                                 this.jogadores[this.novo_jogador.indice] = {
                                     nickname: input_jogador,
                                     qtd_estrela: input_qtd_estrela,
@@ -157,7 +157,7 @@
                                 };
                                 alert('Jogador alterado!');
                             } else {
-                                // Adding a new player
+
                                 this.jogadores.push({
                                     nickname: input_jogador,
                                     qtd_estrela: input_qtd_estrela,
