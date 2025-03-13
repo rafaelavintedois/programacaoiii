@@ -3,25 +3,65 @@
     <head>
         <meta charset="utf-8">
         <title>FrameWork Vue</title>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>    
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     </head> 
     <body>
-        <h2>Primeiro Exemplo com Vue</h2>
+        <h2>Exemplos com Vue</h2>
          
         <div id="app">
             <form id="formulario1" @submit.prevent="adicionarPatente">
+
                 <h2>Listagem de Jogadores</h2>
-                <ul>
-                    <li><label>{{ jogadores[jogadores.length - 1].nickname }}</label></li>
-                    <li><label>{{ jogadores[jogadores.length - 1].qtd_estrela }}</label></li>
-                    <li><label>{{ jogadores[jogadores.length - 1].senha }}</label></li>
-                </ul>  
-                
+
+                <table class="table table-striped" >
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">NickName</th>
+                        <th scope="col">Data Nascimento</th>
+                        <th scope="col">Quantidade de Estrelas</th>
+                        <th scope="col">Status</th>                            
+                        <th scope="col">Alterar</th>
+                        <th scope="col">Remover</th>
+                    </tr>                     
+                    <tbody>
+                        <tr v-for="(j, indice) in jogadores" :key="indice">                                                
+                                <td>{{indice}}</td>
+                                <td>{{j.nickname}}</td>
+                                <td>{{j.data_nascimento}}</td>
+                                <td>{{j.qtd_estrela}}</td>
+                                <td v-if="j.status"><input type="checkbox" checked disabled></td>
+                                <td v-if="!j.status"><input type="checkbox" disabled></td>
+                                <td><button v-on:click="editJogador(indice)" class="btn" type="button">Alterar</button></td>
+                                <td><button v-on:click="remJogador(indice)" class="btn" type="button">Remover</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <div>
                     <h3>Adicionar Nova Patente</h3>
                     <input v-model="novaPatenteDescricao" type="text" placeholder="Descrição da patente">
                     <button type="submit">Adicionar Patente</button>
                 </div>
+
+                <form id="formulario">                         
+                    <h2>Formulário para cadastrar novo jogador</h2>
+                    
+                    <div class="container">
+                        <label>Nickname:</label> <br> <input v-model="novo_jogador.nickname" class="form-control" placeholder="Me edite"> <br>
+                        <label>Estrelas:</label> <br> <input v-model="novo_jogador.qtd_estrela" class="form-control" type="number"> <br>
+                        <label>Data de Nascimento:</label> <br> <input v-model="novo_jogador.data_nascimento" class="form-control" type="date" placeholder="digite a data de nascimento do jogador"> <br>
+                        <label>Pontos:</label> <br> <input v-model="novo_jogador.pontos" class="form-control" type="number" maxlength="1000" placeholder="digite os pontos do jogador"> <br>
+                        <label>Status</label><input v-model="novo_jogador.status" class="form-control" type="checkbox"> <br>
+                        <label>Senha:</label> <br> <input v-model="novo_jogador.senha" class="form-control" type="password" maxlength="4" placeholder="digite uma senha de 4 digitos"> <br>
+                    </div>   
+                    
+                    <br>
+
+                    <button @click="addJogador" class="btn btn-primary" type="button">Salvar</button>
+                        <button @click="cleanFormulario" class="btn btn-primary" type="button">Limpar</button>
+                </form>        
 
                 <h2>Listagem de Patentes</h2>
                 <ul>
@@ -51,18 +91,18 @@
         </div>       
 
         <script type="text/javascript">
-            new Vue({ 
-                el: '#app', 
-                data: { 
+            new Vue({
+                el: '#app',
+                data: {
                     jogadores: [
-                        { nickname: 'joaozinho', qtd_estrela: 5, senha: '123', patente: 'ouro' },    
+                        { nickname: 'joaozinho', qtd_estrela: 5, senha: '123', patente: 'ouro' },
                         { nickname: 'ze', qtd_estrela: 12, senha: '456', patente: 'prata' },
                         { nickname: 'bastião', qtd_estrela: 16, senha: '777' },
                         { nickname: 'dede', qtd_estrela: 16, senha: '777' },
                         { nickname: 'rafa', qtd_estrela: 67, senha: '123', patente: 'diamante' }
-                    ], 
+                    ],
                     patentes: [
-                        { codigo: '1', descricao: 'Ouro' },    
+                        { codigo: '1', descricao: 'Ouro' },
                         { codigo: '2', descricao: 'Prata' },
                         { codigo: '3', descricao: 'Bronze' },
                         { codigo: '4', descricao: 'Diamante' }
@@ -70,11 +110,18 @@
                     partidas: [
                         { codigo: 1, data: '28/02/2023', jogador: { nickname: 'joaozinho', qtd_estrela: 5, senha: '123', patente: 'ouro' } },
                         { codigo: 2, data: '10/02/2023', jogador: { nickname: 'bastião', qtd_estrela: 0, senha: '456', patente: 'prata' } },
-                        { codigo: 3, data: '16/02/2025', jogador: { nickname: 'rafa', qtd_estrela: 67, senha: '123', patente: 'diamante' } }                      
+                        { codigo: 3, data: '16/02/2025', jogador: { nickname: 'rafa', qtd_estrela: 67, senha: '123', patente: 'diamante' } }
                     ],
-                    novaPatenteDescricao: ''
+                    novaPatenteDescricao: '',
+                    novo_jogador: {
+                        nickname: '',
+                        qtd_estrela: 0,
+                        senha: '',
+                        data_nascimento: '',
+                        status: false
+                    }
                 },
-                methods: { 
+                methods: {
                     adicionarPatente() {
                         if (this.novaPatenteDescricao.trim() !== '') {
                             var novoCodigo = (this.patentes.length + 1).toString();
@@ -83,6 +130,82 @@
                         } else {
                             alert('Por favor, insira uma descrição para a patente!');
                         }
+                    },
+                    addJogador() {
+    var input_jogador = this.novo_jogador.nickname.trim();
+    var input_qtd_estrela = this.novo_jogador.qtd_estrela;
+    var input_senha = this.novo_jogador.senha.trim();
+    var input_pontos = this.novo_jogador.pontos;
+    var input_data = this.novo_jogador.data_nascimento;
+
+        if (input_jogador.length > 0 && input_jogador.length < 6) {
+            if (input_qtd_estrela > 0 && input_qtd_estrela < 101) {
+                if (input_senha.length === 4) {
+                    if (input_pontos > 0 && input_pontos < 1001) {
+                        let currentDate = new Date();
+                        let datae = new Date(input_data);
+                        if (currentDate > datae) {
+                            if (this.novo_jogador.indice !== undefined) {
+                                // Editing an existing player
+                                this.jogadores[this.novo_jogador.indice] = {
+                                    nickname: input_jogador,
+                                    qtd_estrela: input_qtd_estrela,
+                                    senha: input_senha,
+                                    pontos: input_pontos,
+                                    data_nascimento: input_data,
+                                    status: this.novo_jogador.status
+                                };
+                                alert('Jogador alterado!');
+                            } else {
+                                // Adding a new player
+                                this.jogadores.push({
+                                    nickname: input_jogador,
+                                    qtd_estrela: input_qtd_estrela,
+                                    senha: input_senha,
+                                    pontos: input_pontos,
+                                    data_nascimento: input_data,
+                                    status: this.novo_jogador.status
+                                });
+                                alert('Novo Jogador cadastrado!');
+                            }
+                            this.cleanFormulario();
+                        } else {
+                            alert("A data de nascimento deve ser anterior à data atual.");
+                        }
+                    } else {
+                        alert("Informe os pontos entre 1 e 1000.");
+                    }
+                } else {
+                    alert("A senha deve ter 4 dígitos.");
+                }
+            } else {
+                alert("Informe a quantidade de estrelas maior do que zero.");
+            }
+        } else {
+            alert("Informe o nickname correto (entre 4 e 8 caracteres).");
+        }
+    },
+    editJogador(param_index) {
+        this.novo_jogador.indice = param_index;
+        this.novo_jogador.nickname = this.jogadores[param_index].nickname;
+        this.novo_jogador.data_nascimento = this.jogadores[param_index].data_nascimento;
+        this.novo_jogador.qtd_estrela = this.jogadores[param_index].qtd_estrela;
+        this.novo_jogador.senha = this.jogadores[param_index].senha;
+        this.novo_jogador.status = this.jogadores[param_index].status;
+
+                    },
+                    remJogador(param_index) {
+                        if (window.confirm("Você realmente deseja remover?")) {
+                            this.jogadores.splice(param_index, 1);
+                            alert('Removeu o jogador: ' + param_index);
+                        }
+                    },
+                    cleanFormulario() {
+                        this.novo_jogador.nickname = '';
+                        this.novo_jogador.data_nascimento = '';
+                        this.novo_jogador.qtd_estrela = 0;
+                        this.novo_jogador.senha = '';
+                        this.novo_jogador.status = false;
                     }
                 }
             });
