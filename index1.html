@@ -15,26 +15,28 @@
 
                 <h2>Listagem de Jogadores</h2>
 
-                <table class="table table-striped" >
+                <table class="table table-striped">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">NickName</th>
                         <th scope="col">Data Nascimento</th>
                         <th scope="col">Quantidade de Estrelas</th>
-                        <th scope="col">Status</th>                            
+                        <th scope="col">Pontos</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Alterar</th>
                         <th scope="col">Remover</th>
                     </tr>                     
                     <tbody>
                         <tr v-for="(j, indice) in jogadores" :key="indice">                                                
-                                <td>{{indice}}</td>
-                                <td>{{j.nickname}}</td>
-                                <td>{{j.data_nascimento}}</td>
-                                <td>{{j.qtd_estrela}}</td>
-                                <td v-if="j.status"><input type="checkbox" checked disabled></td>
-                                <td v-if="!j.status"><input type="checkbox" disabled></td>
-                                <td><button v-on:click="editJogador(indice)" class="btn" type="button">Alterar</button></td>
-                                <td><button v-on:click="remJogador(indice)" class="btn" type="button">Remover</button></td>
+                            <td>{{ indice }}</td>
+                            <td>{{ j.nickname }}</td>
+                            <td>{{ j.data_nascimento }}</td>
+                            <td>{{ j.qtd_estrela }}</td>
+                            <td>{{ j.pontos }}</td>
+                            <td v-if="j.status"><input type="checkbox" checked disabled></td>
+                            <td v-if="!j.status"><input type="checkbox" disabled></td>
+                            <td><button v-on:click="editJogador(indice)" class="btn" type="button">Alterar</button></td>
+                            <td><button v-on:click="remJogador(indice)" class="btn" type="button">Remover</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -141,7 +143,7 @@
         if (input_jogador.length > 0 && input_jogador.length < 6) {
             if (input_qtd_estrela > 0 && input_qtd_estrela < 101) {
                 if (input_senha.length === 4) {
-                    if (input_pontos > 0 && input_pontos < 1001) {
+                    if (input_pontos > 0 && input_pontos < 10001) {
                         let currentDate = new Date();
                         let datae = new Date(input_data);
                         if (currentDate > datae) {
