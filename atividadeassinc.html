@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FrameWork Vue</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+    <div id="app" class="container">
+        <h2>Listagem de Jogadores</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>#</th>
+                <th>NickName</th>
+                <th>Data Nascimento</th>
+                <th>Quantidade de Estrelas</th>
+                <th>Pontos</th>
+                <th>Patente</th>
+                <th>Arma</th>
+                <th>Endereço</th>
+                <th>Status</th>
+                <th>Alterar</th>
+                <th>Remover</th>
+            </tr>
+            <tbody>
+                <tr v-for="(j, indice) in jogadores" :key="indice">
+                    <td>{{ indice }}</td>
+                    <td>{{ j.nickname }}</td>
+                    <td>{{ j.data_nascimento }}</td>
+                    <td>{{ j.qtd_estrela }}</td>
+                    <td>{{ j.pontos }}</td>
+                    <td>{{ j.patente.descricao }}</td>
+                    <td>{{ j.arma.descricao }}</td>
+                    <td>{{ j.endereco.cep }}</td>
+                    <td><input type="checkbox" v-model="j.status" disabled></td>
+                    <td><button @click="editJogador(indice)" class="btn btn-warning">Alterar</button></td>
+                    <td><button @click="remJogador(indice)" class="btn btn-danger">Remover</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div v-if="errors.length" class="alert alert-danger">
+            <b>Por favor, corrija o(s) seguinte(s) erro(s):</b>
+            <ul>
+                <li v-for="error in errors">{{ error }}</li>
+            </ul>
+        </div>
+
+        <h3>Formulário para cadastrar novo jogador</h3>
+        <form>
+            <div class="form-group">
+                <label>Nickname:</label>
+                <input type="text" v-model="novo_jogador.nickname" class="form-control" placeholder="Entre 4 a 8 caracteres">
+            </div>
+            <div class="form-group">
+                <label>Senha:</label>
+                <input type="password" v-model="novo_jogador.senha" class="form-control" placeholder="Exatamente 6 caracteres">
+            </div>
+            <div class="form-group">
+                <label>Data de Nascimento:</label>
+                <input type="date" v-model="novo_jogador.data_nascimento" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Pontos:</label>
+                <input type="number" v-model="novo_jogador.pontos" class="form-control" min="0" placeholder="Digite os pontos">
+            </div>
+            <div class="form-group">
+                <label>Arma Favorita:</label>
+                <select v-model="novo_jogador.arma" class="form-control">
+                    <option disabled value="">Escolha um item</option>
+                    <option v-for="a in armas" :value="a">{{ a.descricao }}</option>
+                </select>
+            </div>
+            <button @click="addJogador" type="button" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                jogadores: [],
+                armas: [{ codigo: 1, descricao: 'AK47' }, { codigo: 2, descricao: 'AWP' }],
+                novo_jogador: { nickname: '', senha: '', data_nascimento: '', pontos: 0, arma: '' },
+                errors: []
+            },
+            methods: {
+                checkForm() {
+                    this.errors = [];
+                    let dataAtual = new Date();
+                    let dataForm = new Date(this.novo_jogador.data_nascimento);
+
+                    if (!this.novo_jogador.nickname || this.novo_jogador.nickname.length < 4 || this.novo_jogador.nickname.length > 8) {
+                        this.errors.push('O nickname deve ter entre 4 e 8 caracteres!');
+                    }
+                    if (!this.novo_jogador.senha || this.novo_jogador.senha.length !== 6) {
+                        this.errors.push('A senha deve ter exatamente 6 caracteres!');
+                    }
+                    if (!this.novo_jogador.data_nascimento || dataForm >= dataAtual) {
+                        this.errors.push('A data de nascimento deve ser anterior à data atual!');
+                    }
+                    if (this.novo_jogador.pontos < 0) {
+                        this.errors.push('Os pontos não podem ser negativos!');
+                    }
+                    if (!this.novo_jogador.arma) {
+                        this.errors.push('A arma deve ser selecionada!');
+                    }
+                    return this.errors.length === 0;
+                },
+                addJogador() {
+                    if (this.checkForm()) {
+                        this.jogadores.push({ ...this.novo_jogador });
+                        this.novo_jogador = { nickname: '', senha: '', data_nascimento: '', pontos: 0, arma: '' };
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
